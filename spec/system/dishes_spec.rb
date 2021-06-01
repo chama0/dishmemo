@@ -108,6 +108,14 @@ RSpec.describe "Dishes", type: :system do
         expect(dish.reload.name).not_to eq ""
       end
     end
+
+    context "料理の削除処理", js: true do
+      it "削除成功のフラッシュが表示されること" do
+        click_on '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content '料理が削除されました'
+      end
+    end
   end
 
   describe "料理詳細ページ" do
@@ -129,6 +137,18 @@ RSpec.describe "Dishes", type: :system do
         expect(page).to have_content dish.reference
         expect(page).to have_content dish.required_time
         expect(page).to have_content dish.popularity
+      end
+    end
+
+    context "料理の削除", js: true do
+      it "削除成功のフラッシュが表示されること" do
+        login_for_system(user)
+        visit dish_path(dish)
+        within find('.change-dish') do
+          click_on '削除'
+        end
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content '料理が削除されました'
       end
     end
   end
