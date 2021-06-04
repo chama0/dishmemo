@@ -1,7 +1,7 @@
 <% provide(:title, "#{@dish.name}") %>
 <div class="container">
   <div class="row">
-    <h2 class="dish-name"><%= @dish.name %></h2>
+    <h2 class="dish-name"><%= @dish.name %></h2><br><br>
     <div class="change-dish">
       <% if current_user == @dish.user %>
         <%= link_to "編集", edit_dish_path(@dish), class: 'edit-dish' %>

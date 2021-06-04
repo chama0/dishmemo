@@ -150,7 +150,6 @@ RSpec.describe "Users", type: :system do
 
       it "料理の情報が表示されていることを確認" do
         Dish.take(5).each do |dish|
-          expect(page).to have_link dish.name
           expect(page).to have_content dish.description
           expect(page).to have_content dish.user.name
           expect(page).to have_content dish.required_time

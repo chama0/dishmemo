@@ -29,7 +29,7 @@ RSpec.describe "StaticPages", type: :system do
           expect(page).to have_content "みんなの料理 (#{user.dishes.count})"
           expect(page).to have_css "div.pagination"
           Dish.take(5).each do |d|
-            expect(page).to have_link d.name
+            expect(page).to have_content d.popularity
           end
         end
 

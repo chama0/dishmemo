@@ -83,19 +83,19 @@ RSpec.describe "Dishes", type: :system do
 
     context "料理の更新処理" do
       it "有効な更新" do
-        fill_in "料理名", with: "編集：イカの塩焼き"
-        fill_in "説明", with: "編集：冬に食べたくなる、身体が温まる料理です"
+        fill_in "料理名", with: "イカの塩焼き"
+        fill_in "説明", with: "冬に食べたくなる、身体が温まる料理です"
         fill_in "分量", with: 3
-        fill_in "コツ・ポイント", with: "編集：ピリッと辛めに味付けするのがオススメ"
+        fill_in "コツ・ポイント", with: "ピリッと辛めに味付けするのがオススメ"
         fill_in "作り方参照用URL", with: "henshu-https://cookpad.com/recipe/2798655"
         fill_in "所要時間", with: 60
         fill_in "人気度", with: 1
         click_button "更新する"
         expect(page).to have_content "料理情報が更新されました！"
-        expect(dish.reload.name).to eq "編集：イカの塩焼き"
-        expect(dish.reload.description).to eq "編集：冬に食べたくなる、身体が温まる料理です"
+        expect(dish.reload.name).to eq "イカの塩焼き"
+        expect(dish.reload.description).to eq "冬に食べたくなる、身体が温まる料理です"
         expect(dish.reload.portion).to eq 3
-        expect(dish.reload.tips).to eq "編集：ピリッと辛めに味付けするのがオススメ"
+        expect(dish.reload.tips).to eq "ピリッと辛めに味付けするのがオススメ"
         expect(dish.reload.reference).to eq "henshu-https://cookpad.com/recipe/2798655"
         expect(dish.reload.required_time).to eq 60
         expect(dish.reload.popularity).to eq 1
