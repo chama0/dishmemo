@@ -225,5 +225,28 @@ RSpec.describe "Users", type: :system do
         expect(link[:href]).to include "/favorites/#{dish.id}/create"
       end
     end
+
+    context "通知生成" do
+      before do
+        login_for_system(user)
+      end
+
+      context "自分の料理に対して" do
+        before do
+          visit dish_path(dish)
+        end
+
+        it "お気に入り登録によって通知が作成されないこと" do
+          find('.like').click
+          visit dish_path(dish)
+          expect(page).to have_css 'li.no_notification'
+          visit notifications_path
+          expect(page).not_to have_content 'お気に入りに登録されました。'
+          expect(page).not_to have_content dish.name
+          expect(page).not_to have_content dish.description
+          expect(page).not_to have_content dish.created_at
+        end
+      end
+    end
   end
 end
