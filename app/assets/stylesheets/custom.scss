@@ -352,3 +352,14 @@ a.like, a.unlike {
 li.new_notification > a > span {
   color: red;
 }
+
+//// リスト ////
+.list-btn-unlist {
+  color: red;
+  margin: 10px 0;
+}
+
+.list-btn-list {
+  color: grey;
+  margin: 10px 0;
+}
