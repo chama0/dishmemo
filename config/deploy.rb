@@ -4,6 +4,7 @@ lock '3.16.0'
 
 # Capistranoのログの表示に利用する
 set :application, 'dishmemo'
+set :deploy_to, '/var/www/dishmemo'
 
 # どのリポジトリからアプリをpullするかを指定する
 set :repo_url,  'git@github.com:chama0/dishmemo.git'
