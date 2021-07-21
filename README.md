@@ -1,18 +1,18 @@
-# アプリケーション概要
+# ●アプリケーション概要
 作った料理を記録して共有できる、料理投稿SNSサービスです。
-http://35.75.115.96/
+『http://35.75.115.96/』←アプリケーションはこちらから
 <a href="https://gyazo.com/3127328ba627e8b7b244e6584aae598a"><img src="https://i.gyazo.com/3127328ba627e8b7b244e6584aae598a.jpg" alt="Image from Gyazo" width="1215"/></a>
 
-# 技術的ポイント
+# ●技術的ポイント
 ・**RSpec**でModel, Request, Systemテスト記述（計205examples）  
-<a href="https://gyazo.com/4e9cbf9cddaf50cd8ed8a1358a1aa868"><img src="https://i.gyazo.com/4e9cbf9cddaf50cd8ed8a1358a1aa868.png" alt="Image from Gyazo" width="174"/></a>
 ・**Rubocop**を使用したコード規約に沿った開発  
-<a href="https://gyazo.com/c510048e13d3c9cfc6c2826d734e129c"><img src="https://i.gyazo.com/c510048e13d3c9cfc6c2826d734e129c.png" alt="Image from Gyazo" width="625"/></a>
 ・**Ajax**を用いた非同期処理（フォロー/未フォロー、お気に入り登録/未登録などの切り替え表示）  
 ・**Bootstrap**によるレスポンシブ対応  
 ・**9つのモデル**をそれぞれ関連付けて使用  
+<a href="https://gyazo.com/4e9cbf9cddaf50cd8ed8a1358a1aa868"><img src="https://i.gyazo.com/4e9cbf9cddaf50cd8ed8a1358a1aa868.png" alt="Image from Gyazo" width="174"/></a>
+<a href="https://gyazo.com/c510048e13d3c9cfc6c2826d734e129c"><img src="https://i.gyazo.com/c510048e13d3c9cfc6c2826d734e129c.png" alt="Image from Gyazo" width="625"/></a>
 
-# アプリケーションの機能
+# ●アプリケーションの機能
 ・作った料理を投稿  
 ・画像を正方形に整形して投稿（CarrierWaveを使用）  
 ・料理ログ登録（料理を作る度にログを追加し、これまでにいつ作ったか、何回作ったかが一目でわかる）  
@@ -36,7 +36,7 @@ http://35.75.115.96/
 <a href="https://gyazo.com/11b3bf954c37a6731fb2d8814c111058"><img src="https://i.gyazo.com/11b3bf954c37a6731fb2d8814c111058.jpg" alt="Image from Gyazo" width="971"/></a>
 ※アプリケーション内の『ディッシュメモとは？』に同じ記載がございます
 
-# 環境
+# ●環境
 - Ruby 2.5.7
 - Ruby on Rails 5.2.3
 - jQuery
@@ -45,12 +45,12 @@ http://35.75.115.96/
 - AWS (EC2,S3)
 - Visual Studio Code
 
-# 開発方式
+# ●開発方式
 - 個人開発
 - アジャイル開発(スクラム)を模した擬似チーム開発(Issue・Pull requestを利用)
 - ペアプログラミング・モブプログラミングを模した開発
 
-# DB設計
+# ●DB設計
 
 # 1.ER図
 <a href="https://gyazo.com/b11b15ffcb0f2bdbc2f30408a40c3236"><img src="https://i.gyazo.com/b11b15ffcb0f2bdbc2f30408a40c3236.png" alt="Image from Gyazo" width="847"/></a>
