@@ -5,6 +5,7 @@ RSpec.describe "Users", type: :system do
   let!(:admin_user) { create(:user, :admin) }
   let!(:other_user) { create(:user) }
   let!(:dish) { create(:dish, user: user) }
+  let!(:other_dish) { create(:dish, user: other_user) }
 
   describe "ユーザー一覧ページ" do
     context "管理者ユーザーの場合" do
@@ -150,15 +151,6 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_content "料理 (#{user.dishes.count})"
       end
 
-      it "料理の情報が表示されていることを確認" do
-        Dish.take(5).each do |dish|
-          expect(page).to have_content dish.description
-          expect(page).to have_content dish.user.name
-          expect(page).to have_content dish.required_time
-          expect(page).to have_content "★" * dish.popularity + "☆" * (5 - dish.popularity)
-        end
-      end
-
       it "料理のページネーションが表示されていることを確認" do
         expect(page).to have_css "div.pagination"
       end
@@ -224,11 +216,69 @@ RSpec.describe "Users", type: :system do
         link = find('.like')
         expect(link[:href]).to include "/favorites/#{dish.id}/create"
       end
+
+      it "お気に入り一覧ページが期待通り表示されること" do
+        visit favorites_path
+        expect(page).not_to have_css ".favorite-dish"
+        user.favorite(dish)
+        user.favorite(other_dish)
+        visit favorites_path
+        expect(page).to have_css ".favorite-dish", count: 2
+        expect(page).to have_content dish.name
+        expect(page).to have_content dish.description
+        expect(page).to have_content "cooked by #{user.name}"
+        expect(page).to have_link user.name, href: user_path(user)
+        expect(page).to have_content other_dish.name
+        expect(page).to have_content other_dish.description
+        expect(page).to have_content "cooked by #{other_user.name}"
+        expect(page).to have_link other_user.name, href: user_path(other_user)
+        user.unfavorite(other_dish)
+        visit favorites_path
+        expect(page).to have_css ".favorite-dish", count: 1
+        expect(page).to have_content dish.name
+      end
     end
 
     context "通知生成" do
       before do
         login_for_system(user)
+      end
+
+      context "自分以外のユーザーの料理に対して" do
+        before do
+          visit dish_path(other_dish)
+        end
+
+        it "お気に入り登録によって通知が作成されること" do
+          find('.like').click
+          visit dish_path(other_dish)
+          expect(page).to have_css 'li.no_notification'
+          logout
+          login_for_system(other_user)
+          expect(page).to have_css 'li.new_notification'
+          visit notifications_path
+          expect(page).to have_css 'li.no_notification'
+          expect(page).to have_content "あなたの料理が#{user.name}さんにお気に入り登録されました。"
+          expect(page).to have_content other_dish.name
+          expect(page).to have_content other_dish.description
+          expect(page).to have_content other_dish.created_at.strftime("%Y/%m/%d(%a) %H:%M")
+        end
+
+        it "コメントによって通知が作成されること" do
+          fill_in "comment_content", with: "コメントしました"
+          click_button "コメント"
+          expect(page).to have_css 'li.no_notification'
+          logout
+          login_for_system(other_user)
+          expect(page).to have_css 'li.new_notification'
+          visit notifications_path
+          expect(page).to have_css 'li.no_notification'
+          expect(page).to have_content "あなたの料理に#{user.name}さんがコメントしました。"
+          expect(page).to have_content '「コメントしました」'
+          expect(page).to have_content other_dish.name
+          expect(page).to have_content other_dish.description
+          expect(page).to have_content other_dish.created_at.strftime("%Y/%m/%d(%a) %H:%M")
+        end
       end
 
       context "自分の料理に対して" do
@@ -245,6 +295,18 @@ RSpec.describe "Users", type: :system do
           expect(page).not_to have_content dish.name
           expect(page).not_to have_content dish.description
           expect(page).not_to have_content dish.created_at
+        end
+
+        it "コメントによって通知が作成されないこと" do
+          fill_in "comment_content", with: "自分でコメント"
+          click_button "コメント"
+          expect(page).to have_css 'li.no_notification'
+          visit notifications_path
+          expect(page).not_to have_content 'コメントしました。'
+          expect(page).not_to have_content '自分でコメント'
+          expect(page).not_to have_content other_dish.name
+          expect(page).not_to have_content other_dish.description
+          expect(page).not_to have_content other_dish.created_at
         end
       end
     end
