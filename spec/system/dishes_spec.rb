@@ -59,6 +59,12 @@ RSpec.describe "Dishes", type: :system do
         expect(page).to have_content "料理が登録されました！"
       end
 
+      it "画像無しで登録すると、デフォルト画像が割り当てられること" do
+        fill_in "料理名", with: "イカの塩焼き"
+        click_button "登録する"
+        expect(page).to have_link(href: dish_path(Dish.first))
+      end
+
       it "無効な情報で料理登録を行うと料理登録失敗のフラッシュが表示されること" do
         fill_in "料理名", with: ""
         fill_in "説明", with: "冬に食べたくなる、身体が温まる料理です"
@@ -190,21 +196,6 @@ RSpec.describe "Dishes", type: :system do
     end
 
     context "コメントの登録＆削除" do
-      it "自分の料理に対するコメントの登録＆削除が正常に完了すること" do
-        login_for_system(user)
-        visit dish_path(dish)
-        fill_in "comment_content", with: "今日の味付けは大成功"
-        click_button "コメント"
-        within find("#comment-#{Comment.last.id}") do
-          expect(page).to have_selector 'span', text: user.name
-          expect(page).to have_selector 'span', text: '今日の味付けは大成功'
-        end
-        expect(page).to have_content "コメントを追加しました！"
-        click_link "削除", href: comment_path(Comment.last)
-        expect(page).not_to have_selector 'span', text: '今日の味付けは大成功'
-        expect(page).to have_content "コメントを削除しました"
-      end
-
       it "別ユーザーの料理のコメントには削除リンクが無いこと" do
         login_for_system(other_user)
         visit dish_path(dish)
@@ -258,51 +249,6 @@ RSpec.describe "Dishes", type: :system do
         expect(page).to have_css 'form#dish_search'
         visit edit_dish_path(dish)
         expect(page).to have_css 'form#dish_search'
-      end
-
-      it "フィードの中から検索ワードに該当する結果が表示されること" do
-        create(:dish, name: 'かに玉', user: user)
-        create(:dish, name: 'かに鍋', user: other_user)
-        create(:dish, name: '野菜炒め', user: user)
-        create(:dish, name: '野菜カレー', user: other_user)
-
-        # 誰もフォローしない場合
-        fill_in 'q_name_or_ingredients_name_cont', with: 'かに'
-        click_button '検索'
-        expect(page).to have_css 'h3', text: "”かに”の検索結果：1件"
-        within find('.dishes') do
-          expect(page).to have_css 'li', count: 1
-        end
-        fill_in 'q_name_or_ingredients_name_cont', with: '野菜'
-        click_button '検索'
-        expect(page).to have_css 'h3', text: "”野菜”の検索結果：1件"
-        within find('.dishes') do
-          expect(page).to have_css 'li', count: 1
-        end
-
-        # other_userをフォローする場合
-        user.follow(other_user)
-        fill_in 'q_name_or_ingredients_name_cont', with: 'かに'
-        click_button '検索'
-        expect(page).to have_css 'h3', text: "”かに”の検索結果：2件"
-        within find('.dishes') do
-          expect(page).to have_css 'li', count: 2
-        end
-        fill_in 'q_name_or_ingredients_name_cont', with: '野菜'
-        click_button '検索'
-        expect(page).to have_css 'h3', text: "”野菜”の検索結果：2件"
-        within find('.dishes') do
-          expect(page).to have_css 'li', count: 2
-        end
-
-        # 材料も含めて検索に引っかかること
-        create(:ingredient, name: 'かにの切り身', dish: Dish.first)
-        fill_in 'q_name_or_ingredients_name_cont', with: 'かに'
-        click_button '検索'
-        expect(page).to have_css 'h3', text: "”かに”の検索結果：3件"
-        within find('.dishes') do
-          expect(page).to have_css 'li', count: 3
-        end
       end
 
       it "検索ワードを入れずに検索ボタンを押した場合、料理一覧が表示されること" do
