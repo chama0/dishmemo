@@ -2,8 +2,8 @@
 作った料理を記録して共有できる、料理投稿SNSサービスです。<br>
 <br>
 ↓↓アプリケーションはこちらから↓↓<br>
-『http://35.75.115.96/』
-<br>
+http://35.75.115.96/
+<br><br><br>
 <a href="https://gyazo.com/6b51f87d84e525a443e17d28d42914c0"><img src="https://i.gyazo.com/6b51f87d84e525a443e17d28d42914c0.jpg" alt="Image from Gyazo" width="1184"/></a>
 
 # ●技術的ポイント
@@ -12,7 +12,8 @@
 - **Ajax**を用いた非同期処理（フォロー/未フォロー、お気に入り登録/未登録などの切り替え表示）  
 - **Bootstrap**によるレスポンシブ対応  
 - **9つのモデル**をそれぞれ関連付けて使用  
-<a href="https://gyazo.com/948d70d4bc0e4b7ff83f95a3cb31b2a7"><img src="https://i.gyazo.com/948d70d4bc0e4b7ff83f95a3cb31b2a7.png" alt="Image from Gyazo" width="172"/></a>
+<br>
+<a href="https://gyazo.com/948d70d4bc0e4b7ff83f95a3cb31b2a7"><img src="https://i.gyazo.com/948d70d4bc0e4b7ff83f95a3cb31b2a7.png" alt="Image from Gyazo" width="172"/></a><br>
 <a href="https://gyazo.com/c510048e13d3c9cfc6c2826d734e129c"><img src="https://i.gyazo.com/c510048e13d3c9cfc6c2826d734e129c.png" alt="Image from Gyazo" width="625"/></a>
 
 # ●アプリケーションの機能
@@ -40,7 +41,7 @@
 ※アプリケーション内の『ディッシュメモとは？』に同じ記載がございます<br>
 <br>
 ↓↓アプリケーションはこちらから↓↓<br>
-『http://35.75.115.96/』
+http://35.75.115.96/
 
 # ●環境
 - Ruby 2.5.7
