@@ -1,3 +1,6 @@
+<h2 align = "center">【 Dish Memo 】</h2>
+<br>
+
 # ●アプリケーション概要
 作った料理を記録して共有できる、料理投稿SNSサービスです。<br>
 <br>
@@ -5,6 +8,12 @@
 http://35.75.115.96/
 <br><br><br>
 <a href="https://gyazo.com/6b51f87d84e525a443e17d28d42914c0"><img src="https://i.gyazo.com/6b51f87d84e525a443e17d28d42914c0.jpg" alt="Image from Gyazo" width="1184"/></a>
+
+# ●制作背景
+「今日のご飯は何にしよう？」「毎日の夕飯メニューを考えるのが大変」<br>
+そういった日頃の小さな悩みをなくしたいという方のために、<br>
+料理のレパートリーを写真やメモ、作り方や必要な材料等と共に保存し、<br>
+家族や友人とSNS形式で共有できるサービスがあればという発想から作成しました。
 
 # ●技術的ポイント
 - **RSpec**でModel, Request, Systemテスト記述（計210examples）  
